@@ -1,0 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package MI_Practical;
+
+/**
+ *
+ * @author ZBook
+ */
+public class SprintEntry extends Entry
+{
+    private int Repetitions;
+    private int recoveryTime;
+    
+    public SprintEntry(String n, int d, int m, int y, int h, int min, int s, float dist,int rep,int recover) {
+        super(n, d, m, y, h, min, s, dist);
+        Repetitions=rep;
+        recoveryTime=recover;
+       
+    }
+    public int getRepetition(){
+        return Repetitions;
+    }
+    public int getRecovery(){
+        return recoveryTime;
+    }
+    public String getEntry(){
+        String result= getName() + "sprinter" + getDistance() +"km in" + getHour() +":" + getMin() + ":" + getSec() + "on" +
+                getDay() + "/" + getMonth() + "/" + getYear() + "at" + getRepetition()+ "\n" + getRecovery() + "\n";
+        return result;
+    }
+        
+    
+    
+}

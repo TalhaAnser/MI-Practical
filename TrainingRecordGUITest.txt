@@ -1,0 +1,164 @@
+/*
+ * Test class for TrainingRecordGUI
+ * It is not finished as we're not expecting you to implement GUI testing
+ * However, you're welcome to use this starter template and extend it and add
+ * test for public methods you implement in TrainingRecordGUI.java
+ */
+package MI_Practical;
+
+import MI_Practical.TrainingRecordGUI;
+import java.awt.event.ActionEvent;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.*;
+// Only used if you want to use reflection to test private features
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import javax.swing.JButton;
+
+
+
+
+/**
+ *
+ * @author saemundur
+ */
+public class TrainingRecordGUITest {
+
+    public TrainingRecordGUITest() {
+    }
+
+    @BeforeAll
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterAll
+    public static void tearDownClass() throws Exception {
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+    }
+
+    /**
+     * Test of main method, of class TrainingRecordGUI.
+     * just tests if the class can be initialised without errors
+     */
+    @Test
+    public void testMain() {
+        System.out.println("main");
+        String[] args = null;
+        TrainingRecordGUI.main(args);
+    }
+
+    /**
+     * Test of actionPerformed method, of class TrainingRecordGUI.
+     * This doesn't test anything but might be used in evaluations
+     */
+    @Test
+    public void testActionPerformed() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        System.out.println("Action not performed");
+    }
+
+    /**
+     * Test of blankDisplay method, of class TrainingRecordGUI.
+     * It just executes the method to see if it doesn't throw an exception
+     */
+    @Test
+    public void testBlankDisplay() {
+        System.out.println("blankDisplay");
+        TrainingRecordGUI instance = new TrainingRecordGUI();
+        instance.blankDisplay();
+    }
+    
+    /**
+     * Test of addEntry method, of class TrainingRecordGUI
+     * 
+     */
+    @Test
+    public void testAddEntry(){
+        System.out.println("addEntry");
+        TrainingRecordGUI instance = new TrainingRecordGUI();
+        Entry entry = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
+        instance.fillDisplay(entry);
+        String message = instance.addEntry("generic");
+        System.out.println(message);
+        assertEquals(message,"Record added\n");
+    }
+    
+    /**
+     * Test to see if all display requirements have been met
+     */
+    @Test
+    public void testButtonsPresentInGUI() throws IllegalAccessException, IllegalArgumentException{
+        System.out.println("Check if you have added the buttons"); 
+        TrainingRecordGUI instance = new TrainingRecordGUI();
+        Class<?> instanceClass = instance.getClass();
+        String[] expectedFields = {"findAllByDate","lookUpByDate"}; // add RemoveEntry when it is ready
+        Field fields[] = instanceClass.getDeclaredFields();
+        int found = 0;
+        for (Field field : fields) {
+            if (Arrays.asList(expectedFields).contains(field.getName())){
+                found += 1;
+                field.setAccessible(true);
+                assertTrue(field.get(instance) instanceof JButton);
+            }
+        }
+        assertEquals(found,expectedFields.length,"Have you added all required buttons?");
+    }
+   
+@Test
+public void testFindAllByDate() {
+    TrainingRecord tr = new TrainingRecord();
+    Entry e1 = new Entry("Jogging", 1, 1, 2023, 10, 0, 0, 3.5f);
+    Entry e2 = new Entry("Cycling", 1, 1, 2023, 14, 0, 0, 10.2f);
+    Entry e3 = new Entry("Swimming", 2, 1, 2023, 8, 30, 0, 1.5f);
+    tr.addEntry(e1);
+    tr.addEntry(e2);
+    tr.addEntry(e3);
+
+    // Test case 1: entries found
+    String expected1 = "Jogging 01/01/2023 10:00:00 3.5 km\nCycling 01/01/2023 14:00:00 10.2 km\n";
+    assertEquals(expected1, tr.findAllByDate(1, 1, 2023));
+
+    // Test case 2: no entries found
+    String expected2 = "No records found on 03/01/2023\n";
+    assertEquals(expected2, tr.findAllByDate(3, 1, 2023));
+}
+@Test
+public void testRemoveEntry() {
+    // Create some test entries
+    Entry entry1 = new Entry("Entry 1", 1, 1, 2023, 10, 0, 0, 0.0f);
+    Entry entry2 = new Entry("Entry 2", 2, 1, 2023, 10, 0, 0, 0.0f);
+    Entry entry3 = new Entry("Entry 3", 3, 1, 2023, 10, 0, 0, 0.0f);
+
+    // Add the entries to a training record
+    TrainingRecord tr = new TrainingRecord();
+    tr.addEntry(entry1);
+    tr.addEntry(entry2);
+    tr.addEntry(entry3);
+
+    // Ensure that the entries were added correctly
+    assertEquals(3, tr.getNumberOfEntries());
+
+    // Remove entry2 from the training record
+    boolean success = tr.removeEntry(entry2);
+
+    // Ensure that the remove operation was successful
+    assertTrue(success);
+    assertEquals(2, tr.getNumberOfEntries());
+
+ 
+}
+
+}
